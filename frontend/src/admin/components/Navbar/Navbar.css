@@ -1,0 +1,97 @@
+.navbar-luxury {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: white;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(106, 13, 173, 0.05);
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-left .logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 1px solid var(--secondary);
+    padding: 2px;
+}
+
+.brand-info h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+}
+
+.brand-info span {
+    font-size: 11px;
+    color: var(--primary);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-tools {
+    display: flex;
+    gap: 10px;
+}
+
+.tool-btn {
+    background: var(--bg-soft);
+    border: 1px solid var(--border-color);
+    color: var(--primary);
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tool-btn:hover {
+    color: white;
+    background: var(--luxury-gradient);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(106, 13, 173, 0.2);
+}
+
+.tool-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.tool-btn:hover svg {
+    transform: scale(1.1);
+}
+
+.nav-profile .profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--secondary);
+    padding: 2px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav-profile .profile:hover {
+    transform: scale(1.05);
+}

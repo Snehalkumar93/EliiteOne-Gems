@@ -1,0 +1,71 @@
+.payment-failure-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+    background: #ffffff;
+}
+
+.failure-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.failure-icon {
+    font-size: 80px;
+    color: #ef4444;
+    margin-bottom: 20px;
+}
+
+.failure-card h1 {
+    font-size: 28px;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.failure-msg {
+    color: #6b7280;
+    margin-bottom: 30px;
+}
+
+.failure-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.retry-btn {
+    padding: 15px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.retry-btn:hover {
+    background: #dc2626;
+}
+
+.contact-support-btn, .home-btn {
+    padding: 15px;
+    background: transparent;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.contact-support-btn:hover, .home-btn:hover {
+    background: #ffffff;
+}

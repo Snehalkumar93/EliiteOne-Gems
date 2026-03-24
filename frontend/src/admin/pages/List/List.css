@@ -1,0 +1,213 @@
+.admin-list-page {
+    padding: 40px;
+    background: var(--bg-main);
+    min-height: 100vh;
+    color: var(--text-main);
+    width: 100%;
+}
+
+.admin-list-header {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.header-titles h1 {
+    font-size: 32px;
+    font-weight: 700;
+    background: var(--luxury-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+}
+
+.header-titles p {
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+.refresh-btn {
+    background: white;
+    border: 1px solid #ddd;
+    color: var(--text-main);
+    padding: 12px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.refresh-btn:hover {
+    border-color: var(--primary);
+    background: var(--bg-soft);
+    transform: translateY(-2px);
+}
+
+/* Table Container */
+.inventory-table-container {
+    background: white;
+    border-radius: 24px;
+    border: 1px solid #eee;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
+
+.inventory-header-row {
+    display: grid;
+    grid-template-columns: 0.8fr 2fr 1.2fr 1.2fr 0.8fr 1fr 0.8fr;
+    padding: 20px 30px;
+    background: var(--bg-soft);
+    border-bottom: 1px solid #eee;
+}
+
+.inventory-header-row span {
+    font-size: 12px;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.inventory-row {
+    display: grid;
+    grid-template-columns: 0.8fr 2fr 1.2fr 1.2fr 0.8fr 1fr 0.8fr;
+    padding: 15px 30px;
+    align-items: center;
+    border-bottom: 1px solid #f9f9f9;
+    transition: background 0.3s ease;
+    color: var(--text-main);
+}
+
+.inventory-row:hover {
+    background: #fafafa;
+}
+
+.inventory-row:last-child {
+    border-bottom: none;
+}
+
+/* Cell Styles */
+.item-img-cell img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    background: white;
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.primary-text {
+    font-weight: 600;
+    color: #f1f5f9;
+    margin-bottom: 2px;
+}
+
+.secondary-text {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.category-badge-admin {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.purity-text {
+    font-size: 12px;
+    color: #fbbf24;
+    font-weight: 500;
+}
+
+.item-stock-cell p {
+    font-weight: 700;
+    font-size: 18px;
+    color: #10b981;
+}
+
+.item-stock-cell p.low-stock {
+    color: #ef4444;
+}
+
+.item-stock-cell small {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+.price-text-admin {
+    font-weight: 700;
+    color: #fbbf24;
+    font-size: 16px;
+}
+
+.item-actions-cell {
+    display: flex;
+    justify-content: center;
+}
+
+.delete-btn-admin {
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete-btn-admin:hover {
+    background: #ef4444;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+}
+
+.no-items-msg {
+    padding: 60px;
+    text-align: center;
+    color: #64748b;
+    font-style: italic;
+}
+
+@media (max-width: 1100px) {
+    .inventory-header-row, .inventory-row {
+        grid-template-columns: 0.8fr 2fr 1.2fr 1fr 0.8fr;
+    }
+    .item-material-cell, .item-category-cell {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-list-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .inventory-header-row {
+        display: none;
+    }
+    .inventory-row {
+        grid-template-columns: 1fr 2fr 1fr;
+        gap: 15px;
+        padding: 20px;
+    }
+    .item-stock-cell {
+        display: none;
+    }
+}

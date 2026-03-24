@@ -1,0 +1,66 @@
+:root {
+  --primary: #6A0DAD;
+  --secondary: #FF6EC7;
+  --accent: #D4AF37;
+  --bg-main: #F9F7FC;
+  --bg-soft: #F1ECFF;
+  --text-main: #2E2E2E;
+  --text-light: #6B6B6B;
+  --success: #2ECC71;
+  --error: #E74C3C;
+  --deep-purple: #4B0082;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(106, 13, 173, 0.1);
+  --luxury-gradient: linear-gradient(135deg, #6A0DAD, #FF6EC7);
+  --bg-card: #ffffff;
+  --border-color: #eeeeee;
+}
+
+.admin-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+.admin-content {
+  display: flex;
+  flex: 1;
+}
+
+.admin-main-viewport {
+  flex: 1;
+  background: var(--bg-main);
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.admin-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 18px;
+  color: var(--secondary);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+/* Scrollbar Styling */
+.admin-main-viewport::-webkit-scrollbar {
+  width: 8px;
+}
+
+.admin-main-viewport::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+.admin-main-viewport::-webkit-scrollbar-thumb {
+  background: var(--bg-soft);
+  border-radius: 10px;
+}
+
+.admin-main-viewport::-webkit-scrollbar-thumb:hover {
+  background: #ddd;
+}

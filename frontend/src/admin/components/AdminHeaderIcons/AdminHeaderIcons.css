@@ -1,0 +1,188 @@
+.admin-header-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.admin-header-icons .admin-icon-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-header-icons .admin-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    outline: none;
+}
+
+.icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-wrapper svg {
+    width: 24px;
+    height: 24px;
+    color: black;
+    stroke: black;
+    transition: all 0.3s ease;
+}
+
+.icon-wrapper:hover svg {
+    color: white;
+    stroke: white;
+    background: black;
+    border-radius: 50%;
+    padding: 6px;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.admin-header-icons .admin-icon-btn i {
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hover effects (purple-pink theme) scoped entirely to admin component */
+.admin-header-icons .admin-icon-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px) scale(1.05);
+}
+
+.admin-header-icons .admin-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 10px;
+    height: 10px;
+    background-color: #ef4444; /* Red dot */
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+}
+
+.admin-header-icons .admin-dropdown-panel {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    min-width: 200px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: adminFadeInSlide 0.2s ease-out forwards;
+    padding: 10px;
+}
+
+@keyframes adminFadeInSlide {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.admin-header-icons .admin-search-panel {
+    min-width: 250px;
+    padding: 10px;
+}
+
+.admin-header-icons .admin-search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.admin-header-icons .admin-search-input:focus {
+    border-color: #9333ea;
+}
+
+.admin-header-icons .admin-dropdown-header {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+    padding: 0 5px 8px;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 5px;
+}
+
+.admin-header-icons .admin-dropdown-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.admin-header-icons .admin-dropdown-list li {
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-header-icons .admin-dropdown-list li:hover {
+    background-color: #f3f4f6;
+}
+
+.admin-header-icons .admin-settings-panel li:hover {
+    background-color: #fce7f3;
+    color: #9333ea;
+}
+
+.admin-header-icons .admin-logout-btn:hover {
+    color: #ef4444 !important;
+    background-color: #fee2e2 !important;
+}
+
+.admin-header-icons .admin-notif-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.admin-header-icons .admin-notif-title {
+    font-weight: 600;
+    font-size: 13px;
+    margin: 0;
+    color: #1f2937;
+}
+
+.admin-header-icons .admin-notif-desc {
+    font-size: 12px;
+    margin: 0;
+    color: #6b7280;
+}

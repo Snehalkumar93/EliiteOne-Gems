@@ -1,0 +1,131 @@
+.sidebar{
+    width: 18%;
+    min-height: 100vh;
+    border: 1.5px solid #A9A9A9;
+    border-top: 0;
+}
+.sidebar-options{
+    padding-top: 50px;
+    padding-left: 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.sidebar-option{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #A9A9A9;
+    border-right: 0;
+    padding: 8px 10px;
+    border-radius: 3px 0px 0px 3px; 
+    cursor: pointer;
+}
+.sidebar{
+    font-size: max(1vw,10px );
+}
+.sidebar-option img{
+    width: 20px;
+}
+.sidebar-option.active {
+  background-color: var(--bg-soft);
+  border-color: var(--secondary);
+  color: var(--primary);
+  font-weight: 600;
+}
+.list-table-format.title {
+    background-color: var(--bg-soft);
+    color: var(--primary);
+    font-weight: 600;
+    border-bottom: 2px solid var(--secondary);
+}
+@media (max-width:900px) {
+    .sidebar-option p{
+       display: none;
+    }
+}
+.sidebar-luxury {
+    width: 280px;
+    background: var(--bg-soft);
+    border-right: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 20px;
+    height: calc(100vh - 80px); /* Adjust for Navbar */
+    position: sticky;
+    top: 80px;
+    overflow-y: auto;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 20px;
+    color: var(--text-light);
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar-item:hover {
+    color: var(--primary);
+    background: white;
+}
+
+.sidebar-item.active {
+    color: #ffffff;
+    background: var(--primary);
+    box-shadow: 0 10px 20px var(--primary);
+}
+
+.sidebar-divider {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #999;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 25px 0 15px 20px;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.sidebar-footer p {
+    color: #64748b;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.sidebar-footer span {
+    color: var(--primary);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 1024px) {
+    .sidebar-luxury {
+        width: 80px;
+        padding: 40px 10px;
+    }
+    .sidebar-item p, .sidebar-divider, .sidebar-footer {
+        display: none;
+    }
+    .sidebar-item {
+        justify-content: center;
+        padding: 15px;
+    }
+}
