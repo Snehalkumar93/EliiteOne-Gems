@@ -21,10 +21,13 @@ const sendEmail = async (to, subject, htmlContent) => {
             subject: subject,
             html: htmlContent,
         });
-        console.log("Message sent: %s", info.messageId);
+        console.log("[SMTP_SUCCESS] Message sent: %s", info.messageId);
         return true;
     } catch (error) {
-        console.error("Error sending email", error);
+        console.error("[SMTP_ERROR] Failed to send email:", error.message);
+        if (error.code === 'EAUTH') {
+            console.error("[SMTP_ERROR] Authentication failed. Please verify EMAIL_USER and EMAIL_PASS (App Password).");
+        }
         return false;
     }
 }

@@ -33,15 +33,20 @@ app.use(express.json())
 const allowedOrigins = [
   process.env.CLIENT_URL,
   process.env.ADMIN_URL,
+  "http://localhost:5173",
+  "http://localhost:5174",
 ].filter(Boolean); // remove undefined/empty values
+
+console.log("[SERVER] Allowed CORS Origins:", allowedOrigins);
 
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (curl, Postman, server-to-server)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
+    if (allowedOrigins.includes(origin) || origin.includes("vercel.app") || origin.includes("onrender.com")) {
       return callback(null, true);
     }
+    console.warn(`[CORS_WARNING] Request from unauthorized origin: ${origin}`);
     return callback(new Error(`CORS not allowed for origin: ${origin}`));
   },
   credentials: true,

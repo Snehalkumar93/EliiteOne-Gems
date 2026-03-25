@@ -75,7 +75,11 @@ const registerUser = async (req, res) => {
         const user = await newUser.save()
         
         // Send Verification Email
-        const verifyLink = `${process.env.CLIENT_URL}/verify-email/${verifyToken}`;
+        const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+        const verifyLink = `${clientUrl}/verify-email/${verifyToken}`;
+        
+        console.log(`[VERIFY_EMAIL] Generated link for ${normalizedEmail}: ${verifyLink}`);
+        
         const emailSubject = 'Verify Your Email - EliteOne Gems';
         const emailHtml = `
             <div style="font-family: 'Playfair Display', serif; max-width: 600px; margin: 0 auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 20px; color: #1a1a1a;">
@@ -90,7 +94,12 @@ const registerUser = async (req, res) => {
             </div>
         `;
 
-        await sendEmail(normalizedEmail, emailSubject, emailHtml);
+        const mailSent = await sendEmail(normalizedEmail, emailSubject, emailHtml);
+        if (mailSent) {
+            console.log(`[VERIFY_EMAIL] Email successfully sent to ${normalizedEmail}`);
+        } else {
+            console.error(`[VERIFY_EMAIL] Failed to send email to ${normalizedEmail}`);
+        }
 
         res.json({ success: true, message: "Registration successful! Please check your email for verification link." })
     } catch (error) {
@@ -287,6 +296,7 @@ const verifyEmail = async (req, res) => {
         });
 
         if (!user) {
+            console.warn(`[VERIFY_EMAIL] Invalid or expired token attempt: ${token?.substring(0, 8)}...`);
             return res.json({ success: false, message: "Invalid or expired verification link." });
         }
 
@@ -294,6 +304,8 @@ const verifyEmail = async (req, res) => {
         user.verifyToken = "";
         user.verifyTokenExpiry = null;
         await user.save();
+
+        console.log(`[VERIFY_EMAIL] User ${user.email} verified successfully.`);
 
         res.json({ success: true, message: "Email verified successfully! You can now login." });
     } catch (error) {
@@ -326,7 +338,11 @@ const resendVerification = async (req, res) => {
         await user.save();
 
         // Send Verification Email
-        const verifyLink = `${process.env.CLIENT_URL}/verify-email/${verifyToken}`;
+        const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+        const verifyLink = `${clientUrl}/verify-email/${verifyToken}`;
+        
+        console.log(`[VERIFY_EMAIL] Resending link for ${normalizedEmail}: ${verifyLink}`);
+
         const emailSubject = 'Verify Your Email - EliteOne Gems';
         const emailHtml = `
             <div style="font-family: 'Playfair Display', serif; max-width: 600px; margin: 0 auto; padding: 40px; border: 1px solid #f0f0f0; border-radius: 20px; color: #1a1a1a;">
@@ -340,7 +356,12 @@ const resendVerification = async (req, res) => {
             </div>
         `;
 
-        await sendEmail(normalizedEmail, emailSubject, emailHtml);
+        const mailSent = await sendEmail(normalizedEmail, emailSubject, emailHtml);
+        if (mailSent) {
+            console.log(`[VERIFY_EMAIL] Resend successful for ${normalizedEmail}`);
+        } else {
+            console.error(`[VERIFY_EMAIL] Resend failed for ${normalizedEmail}`);
+        }
 
         res.json({ success: true, message: "Verification email resent successfully!" });
     } catch (error) {
