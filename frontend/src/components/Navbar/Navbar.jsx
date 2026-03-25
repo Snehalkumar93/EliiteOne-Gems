@@ -70,16 +70,25 @@ const Navbar = ({ setShowLogin }) => {
 
   // Effect to lock body scroll when mobile menu is open
   useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
     if (isMobileMenuOpen) {
       document.body.classList.add('mobile-menu-open');
       document.documentElement.classList.add('mobile-menu-open');
+      window.addEventListener('keydown', handleKeyDown);
     } else {
       document.body.classList.remove('mobile-menu-open');
       document.documentElement.classList.remove('mobile-menu-open');
+      window.removeEventListener('keydown', handleKeyDown);
     }
     return () => {
       document.body.classList.remove('mobile-menu-open');
       document.documentElement.classList.remove('mobile-menu-open');
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isMobileMenuOpen]);
 
