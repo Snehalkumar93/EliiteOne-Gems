@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: jewelry-store-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18.0.0
+      - key: PORT
+        value: 10000
+      - fromGroup: jewelry-store-secrets
+    # Connect this to your MongoDB, JWT, etc. in the Render Dashboard "Environment Groups"
