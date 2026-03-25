@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom';
 import './Navbar.css'
 import { assets } from '../../assets/assets'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -77,15 +78,18 @@ const Navbar = ({ setShowLogin }) => {
     };
 
     if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
       document.body.classList.add('mobile-menu-open');
       document.documentElement.classList.add('mobile-menu-open');
       window.addEventListener('keydown', handleKeyDown);
     } else {
+      document.body.style.overflow = "";
       document.body.classList.remove('mobile-menu-open');
       document.documentElement.classList.remove('mobile-menu-open');
       window.removeEventListener('keydown', handleKeyDown);
     }
     return () => {
+      document.body.style.overflow = "";
       document.body.classList.remove('mobile-menu-open');
       document.documentElement.classList.remove('mobile-menu-open');
       window.removeEventListener('keydown', handleKeyDown);
@@ -102,54 +106,60 @@ const Navbar = ({ setShowLogin }) => {
         <li onClick={() => { setMenu("contact"); handleScroll('footer'); }} className={menu === "contact" ? "active" : ""}>contact us</li>
       </ul>
 
-      {/* Mobile Menu Overlay */}
-      <div className={`mobile-menu-overlay ${isMobileMenuOpen ? "active" : ""}`} onClick={() => setIsMobileMenuOpen(false)}></div>
-      
-      {/* Mobile Menu Drawer */}
-      <div className={`navbar-menu-drawer ${isMobileMenuOpen ? "mobile-active" : ""}`}>
-        <div className="mobile-menu-header">
-          <img className='logo' src={assets.logo} alt="EliteOne Gems" />
-          <div className="close-menu-wrapper" onClick={() => setIsMobileMenuOpen(false)} aria-label="Close menu">
-            <X className="close-menu-icon" size={24} />
-          </div>
-        </div>
-        
-        <nav className="mobile-nav-links">
-          <Link to="/" onClick={() => { setMenu("home"); setIsMobileMenuOpen(false); }} className={`mobile-nav-item ${menu === "home" ? "active" : ""}`}>
-            <span>Home</span>
-          </Link>
-          <span onClick={() => { setMenu("menu"); handleScroll('explore-menu'); setIsMobileMenuOpen(false); }} className={`mobile-nav-item ${menu === "menu" ? "active" : ""}`}>
-            <span>Collections</span>
-          </span>
-          <span onClick={() => { setMenu("contact"); handleScroll('footer'); setIsMobileMenuOpen(false); }} className={`mobile-nav-item ${menu === "contact" ? "active" : ""}`}>
-            <span>Contact Us</span>
-          </span>
-        </nav>
-
-        <div className="mobile-menu-footer">
-          {!token ? (
-            <div className="mobile-auth-container">
-              <p className="mobile-menu-note">Join EliteOne Gems for exclusive collections</p>
-              <button className="premium-pill-button" onClick={() => { setShowLogin(true); setIsMobileMenuOpen(false); }}>Sign Up / Login</button>
-            </div>
-          ) : (
-            <div className="mobile-auth-container">
-              <button className="premium-pill-button outline" onClick={() => { navigate('/profile'); setIsMobileMenuOpen(false); }}>My Profile</button>
-              {role === 'admin' && (
-                <button className="premium-pill-button admin" onClick={() => { navigate('/admin'); setIsMobileMenuOpen(false); }}>Admin Dashboard</button>
-              )}
-              <button className="premium-pill-button logout" onClick={() => { logout(); setIsMobileMenuOpen(false); }}>Logout Account</button>
-            </div>
-          )}
+      {/* Mobile Menu Portal */}
+      {createPortal(
+        <>
+          {/* Mobile Menu Overlay */}
+          <div 
+            className={`mobile-menu-overlay ${isMobileMenuOpen ? "active" : ""}`} 
+            onClick={() => setIsMobileMenuOpen(false)}
+          ></div>
           
-          <div className="mobile-brand-section">
-            <p className="brand-tagline">Exquisite Jewellery for Every Occasion</p>
-            <div className="mobile-social-links">
-              {/* Optional Social Icons could go here */}
+          {/* Mobile Menu Drawer */}
+          <div className={`navbar-menu-drawer ${isMobileMenuOpen ? "mobile-active" : ""}`}>
+            <div className="mobile-menu-header">
+              <img className='logo' src={assets.logo} alt="EliteOne Gems" />
+              <div className="close-menu-wrapper" onClick={() => setIsMobileMenuOpen(false)} aria-label="Close menu">
+                <X className="close-menu-icon" size={24} />
+              </div>
+            </div>
+            
+            <nav className="mobile-nav-links">
+              <Link to="/" onClick={() => { setMenu("home"); setIsMobileMenuOpen(false); }} className={`mobile-nav-item ${menu === "home" ? "active" : ""}`}>
+                <span>Home</span>
+              </Link>
+              <span onClick={() => { setMenu("menu"); handleScroll('explore-menu'); setIsMobileMenuOpen(false); }} className={`mobile-nav-item ${menu === "menu" ? "active" : ""}`}>
+                <span>Collections</span>
+              </span>
+              <span onClick={() => { setMenu("contact"); handleScroll('footer'); setIsMobileMenuOpen(false); }} className={`mobile-nav-item ${menu === "contact" ? "active" : ""}`}>
+                <span>Contact Us</span>
+              </span>
+            </nav>
+
+            <div className="mobile-menu-footer">
+              {!token ? (
+                <div className="mobile-auth-container">
+                  <p className="mobile-menu-note">Join EliteOne Gems for exclusive collections</p>
+                  <button className="premium-pill-button" onClick={() => { setShowLogin(true); setIsMobileMenuOpen(false); }}>Sign Up / Login</button>
+                </div>
+              ) : (
+                <div className="mobile-auth-container">
+                  <button className="premium-pill-button outline" onClick={() => { navigate('/profile'); setIsMobileMenuOpen(false); }}>My Profile</button>
+                  {role === 'admin' && (
+                    <button className="premium-pill-button admin" onClick={() => { navigate('/admin'); setIsMobileMenuOpen(false); }}>Admin Dashboard</button>
+                  )}
+                  <button className="premium-pill-button logout" onClick={() => { logout(); setIsMobileMenuOpen(false); }}>Logout Account</button>
+                </div>
+              )}
+              
+              <div className="mobile-brand-section">
+                <p className="brand-tagline">Exquisite Jewellery for Every Occasion</p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>,
+        document.body
+      )}
       <div className="navbar-right">
         <div className={`navbar-search-container ${isSearchVisible ? "active" : ""}`}>
           <div className="icon-wrapper" onClick={() => setIsSearchVisible(!isSearchVisible)}>
