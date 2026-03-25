@@ -14,8 +14,8 @@
 }
 
 .navbar .logo {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
@@ -223,7 +223,8 @@
 
 @media (max-width:1050px) {
     .navbar .logo {
-        width: 140px;
+        width: 50px;
+        height: 50px;
     }
 
     .navbar-menu {
@@ -246,7 +247,8 @@
 
 @media (max-width:900px) {
     .navbar .logo {
-        width: 120px;
+        width: 45px;
+        height: 45px;
     }
 
     .navbar-menu {
@@ -268,9 +270,232 @@
     }
 }
 
-@media (max-width:750px) {
+@media (max-width: 750px) {
+    .navbar {
+        padding: 10px 20px;
+    }
+
     .navbar-menu {
+        display: none !important;
+    }
+
+    /* Mobile Menu Drawer */
+    .navbar-menu-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(85vw, 360px);
+        height: 100vh;
+        background: #ffffff !important;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -10px 0 30px rgba(0,0,0,0.12);
+        transform: translateX(100%);
+    }
+
+    .navbar-menu-drawer.mobile-active {
+        transform: translateX(0);
+    }
+
+    /* Overlay */
+    .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 9998;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+        backdrop-filter: blur(2px);
+    }
+
+    .mobile-menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Header in Drawer */
+    .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .mobile-menu-header .logo {
+        width: 45px;
+        height: 45px;
+    }
+
+    .close-menu-wrapper {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #f9fafb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .close-menu-wrapper:hover {
+        background: #f3f4eb;
+        transform: scale(1.05);
+    }
+
+    .close-menu-icon {
+        color: #1a1a1a;
+    }
+
+    /* Nav Links in Drawer */
+    .mobile-nav-links {
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .mobile-nav-item {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #374151;
+        padding: 16px 0;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #f9fafb;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+    .mobile-nav-item:last-child {
+        border-bottom: none;
+    }
+
+    .mobile-nav-item.active {
+        color: var(--primary);
+        font-weight: 700;
+    }
+
+    .mobile-nav-item span {
+        position: relative;
+    }
+
+    /* Footer in Drawer */
+    .mobile-menu-footer {
+        padding: 24px;
+        background: #fdfafb;
+        border-top: 1px solid #f3f4f6;
+    }
+
+    .mobile-auth-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .mobile-menu-note {
+        font-size: 13px;
+        color: #6b7280;
+        text-align: center;
+        margin-bottom: 4px;
+    }
+
+    .premium-pill-button {
+        width: 100%;
+        padding: 14px;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 10px 20px rgba(106, 13, 173, 0.15);
+    }
+
+    .premium-pill-button:active {
+        transform: scale(0.98);
+    }
+
+    .premium-pill-button.outline {
+        background: transparent;
+        border: 2px solid var(--primary);
+        color: var(--primary);
+        box-shadow: none;
+    }
+
+    .premium-pill-button.logout {
+        background: #fee2e2;
+        color: #ef4444;
+        box-shadow: none;
+        font-weight: 600;
+    }
+
+    .premium-pill-button.admin {
+        background: var(--luxury-gradient);
+    }
+
+    .mobile-brand-section {
+        text-align: center;
+    }
+
+    .brand-tagline {
+        font-size: 12px;
+        color: #9ca3af;
+        font-style: italic;
+        margin-bottom: 10px;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+        cursor: pointer;
+    }
+
+    .navbar-right {
+        gap: 15px;
+    }
+
+    .navbar-right button {
         display: none;
+    }
+}
+
+/* Global Body/HTML Classes for scroll lock */
+html.mobile-menu-open,
+body.mobile-menu-open {
+    overflow: hidden !important;
+    height: 100% !important;
+    position: relative;
+    touch-action: none; /* Prevents touch scrolling */
+}
+
+/* Hide floating chat when menu is open */
+body.mobile-menu-open .live-chat-wrapper {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.3s ease;
+}
+
+@media (min-width: 751px) {
+    .mobile-menu-toggle, 
+    .navbar-menu-drawer, 
+    .mobile-menu-overlay {
+        display: none !important;
     }
 }
 

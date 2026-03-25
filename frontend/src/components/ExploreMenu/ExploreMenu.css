@@ -52,3 +52,18 @@
         font-size: 14px;
     }
 }
+
+@media (max-width: 768px) {
+    .explore-menu h1 {
+        font-size: 24px;
+    }
+    
+    .explore-menu-list-item img {
+        width: 15vw;
+        min-width: 70px;
+    }
+
+    .explore-menu-list-item p {
+        font-size: 14px;
+    }
+}

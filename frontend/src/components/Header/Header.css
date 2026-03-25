@@ -1,6 +1,7 @@
 .header {
-    height: 40vw;
-    margin: 30px auto;
+    height: 45vw;
+    min-height: 250px;
+    margin: 20px auto;
     background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/header_img.png') no-repeat;
     background-size: cover;
     background-position: center;
@@ -55,20 +56,51 @@
 
 @media (max-width:1050px) {
     .header-contents {
-        max-width: 45%;
+        max-width: 55%;
     }
 }
 
 @media (max-width:750px) {
+    .header {
+        height: 60vw;
+        border-radius: 12px;
+    }
+
     .header-contents {
-        max-width: 65%;
+        max-width: 85%;
+        left: 8vw;
+        gap: 10px;
+    }
+
+    .header-contents h2 {
+        font-size: max(6vw, 20px);
     }
 
     .header-contents p {
-        display: none;
+        font-size: 13px;
+        -webkit-line-clamp: 3;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .header-contents button {
-        padding: 2vw 4vw;
+        padding: 10px 25px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width:480px) {
+    .header {
+        height: 80vw;
+        min-height: 300px;
+    }
+
+    .header-contents h2 {
+        font-size: 24px;
+    }
+
+    .header-contents p {
+        font-size: 12px;
     }
 }

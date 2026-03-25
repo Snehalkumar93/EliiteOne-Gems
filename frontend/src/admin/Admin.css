@@ -33,7 +33,13 @@
   flex: 1;
   background: var(--bg-main);
   overflow-y: auto;
-  padding: 20px;
+  padding: 30px;
+}
+
+@media (max-width: 768px) {
+  .admin-main-viewport {
+    padding: 15px;
+  }
 }
 
 .admin-loading {
@@ -49,7 +55,7 @@
 
 /* Scrollbar Styling */
 .admin-main-viewport::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .admin-main-viewport::-webkit-scrollbar-track {
