@@ -15,7 +15,7 @@ const Navbar = ({ setShowLogin }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const { getTotalCartAmount, token, setToken, role, setRole, url } = useContext(StoreContext);
+  const { getTotalCartAmount, token, setToken, role, setRole, url, userData } = useContext(StoreContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -58,8 +58,10 @@ const Navbar = ({ setShowLogin }) => {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    localStorage.removeItem("userData");
     setToken("");
     setRole("");
+    setUserData(null);
     navigate('/')
   }
 
@@ -210,8 +212,17 @@ const Navbar = ({ setShowLogin }) => {
         )}
         {!token ? <button onClick={() => setShowLogin(true)}>sign up</button>
           : <div className='navbar-profile'>
-            <div className="icon-wrapper">
-              <User className="nav-icon" size={22} strokeWidth={2.5} />
+            <div className="icon-wrapper profile-icon-navbar">
+               {userData?.profileImage ? (
+                <img 
+                  src={url + "/images/profile/" + userData.profileImage} 
+                  alt="Profile" 
+                  className="navbar-profile-img"
+                  style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }}
+                />
+              ) : (
+                <User className="nav-icon" size={22} strokeWidth={2.5} />
+              )}
             </div>
             <ul className='navbar-profile-dropdown'>
               <li onClick={() => navigate('/profile')}> <User size={18} strokeWidth={2} /> <p>My Profile</p></li>

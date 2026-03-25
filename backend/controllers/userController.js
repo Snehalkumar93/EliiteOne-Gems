@@ -30,7 +30,17 @@ const loginUser = async (req, res) => {
 
 
         const token = generateToken(user._id, user.role);
-        res.json({ success: true, token, role: user.role })
+        res.json({ 
+            success: true, 
+            token, 
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                profileImage: user.profileImage
+            }
+        })
     } catch (error) {
         console.error('Login Error details:', error);
         res.json({ success: false, message: error.message || "Error" })

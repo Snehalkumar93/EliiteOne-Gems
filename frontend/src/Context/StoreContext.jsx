@@ -16,7 +16,15 @@ const StoreContextProvider = (props) => {
         }
     });
     const [token, setToken] = useState(localStorage.getItem("token") || "")
-    const [role, setRole] = useState("")
+    const [role, setRole] = useState(localStorage.getItem("role") || "")
+    const [userData, setUserData] = useState(() => {
+        try {
+            const saved = localStorage.getItem("userData");
+            return saved ? JSON.parse(saved) : null;
+        } catch (e) {
+            return null;
+        }
+    })
     const [discount, setDiscount] = useState(0);
     const [appliedCoupon, setAppliedCoupon] = useState(null);
     const currency = "₹";
@@ -114,6 +122,28 @@ const StoreContextProvider = (props) => {
         }
     }, [url]);
 
+    const fetchUserData = useCallback(async (token) => {
+        if (!token) return;
+        try {
+            const response = await axios.get(url + "/api/user/me", { headers: { Authorization: `Bearer ${token}` } });
+            if (response.data.success) {
+                setUserData(response.data.data);
+                setRole(response.data.data.role);
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    }, [url]);
+
+    // Effect to sync userData with localStorage
+    useEffect(() => {
+        if (userData) {
+            localStorage.setItem("userData", JSON.stringify(userData));
+        } else {
+            localStorage.removeItem("userData");
+        }
+    }, [userData]);
+
     const loadCartData = useCallback(async (token) => {
         try {
             const response = await axios.post(url + "/api/cart/get", {}, { headers: { Authorization: `Bearer ${token}` } });
@@ -138,16 +168,20 @@ const StoreContextProvider = (props) => {
 
     useEffect(() => {
         async function loadData() {
-            await fetchJewelleryList();
             const storedToken = localStorage.getItem("token");
+            const promises = [fetchJewelleryList()];
+            
             if (storedToken) {
-                setToken(storedToken)
-                setRole(localStorage.getItem("role"))
-                await loadCartData(storedToken)
+                setToken(storedToken);
+                setRole(localStorage.getItem("role") || "");
+                promises.push(fetchUserData(storedToken));
+                promises.push(loadCartData(storedToken));
             }
+            
+            await Promise.allSettled(promises);
         }
         loadData()
-    }, [fetchJewelleryList, loadCartData])
+    }, [fetchJewelleryList, fetchUserData, loadCartData])
 
     const contextValue = {
         url,
@@ -162,6 +196,9 @@ const StoreContextProvider = (props) => {
         setToken,
         role,
         setRole,
+        userData,
+        setUserData,
+        fetchUserData,
         loadCartData,
         setCartItems,
         currency,

@@ -12,11 +12,10 @@ import {
 import { DollarSign, ShoppingBag, TrendingUp, User, ShieldCheck, Headset, LayoutDashboard, LogOut, Camera, Inbox, Bot } from 'lucide-react';
 
 const Profile = () => {
-    const { url, token, setToken, role, setRole, currency } = useContext(StoreContext);
+    const { url, token, setToken, role, setRole, currency, userData, setUserData } = useContext(StoreContext);
     const navigate = useNavigate();
 
     const [activeTab, setActiveTab] = useState('account');
-    const [userData, setUserData] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
@@ -170,8 +169,10 @@ const Profile = () => {
     const logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("role");
+        localStorage.removeItem("userData");
         setToken("");
         setRole("");
+        setUserData(null);
         navigate('/');
     }
 

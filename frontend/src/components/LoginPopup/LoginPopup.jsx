@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 
 const LoginPopup = ({ setShowLogin }) => {
 
-    const { setToken, url, loadCartData, setRole } = useContext(StoreContext)
+    const { setToken, url, loadCartData, setRole, setUserData } = useContext(StoreContext)
     const [currState, setCurrState] = useState("Sign Up");
     const navigate = useNavigate();
 
@@ -41,11 +41,15 @@ const LoginPopup = ({ setShowLogin }) => {
                 toast.success(response.data.message || "Verification email sent. Please check your inbox.")
                 setCurrState("Login")
             } else {
-                setToken(response.data.token)
-                localStorage.setItem("token", response.data.token)
-                localStorage.setItem("role", response.data.role)
-                setRole(response.data.role)
-                loadCartData({ token: response.data.token })
+                const { token, user } = response.data;
+                setToken(token)
+                setUserData(user)
+                setRole(user.role)
+                localStorage.setItem("token", token)
+                localStorage.setItem("role", user.role)
+                localStorage.setItem("userData", JSON.stringify(user))
+                loadCartData(token)
+                toast.success("Login Successful");
                 setShowLogin(false)
             }
         }
