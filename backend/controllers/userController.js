@@ -85,8 +85,12 @@ const registerUser = async (req, res) => {
         const user = await newUser.save()
         
         // Send Verification Email
-        const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
-        const verifyLink = `${clientUrl}/verify-email/${verifyToken}`;
+        const clientUrl = process.env.CLIENT_URL;
+        if (!clientUrl) {
+            console.warn("[WARN] CLIENT_URL environment variable is missing. Verification links will default to http://localhost:5173");
+        }
+        const baseUrl = clientUrl || "http://localhost:5173";
+        const verifyLink = `${baseUrl}/verify-email/${verifyToken}`;
         
         console.log(`[VERIFY_EMAIL] Generated link for ${normalizedEmail}: ${verifyLink}`);
         
@@ -300,6 +304,10 @@ const trackView = async (req, res) => {
 const verifyEmail = async (req, res) => {
     const { token } = req.body;
     try {
+        if (!token) {
+            return res.json({ success: false, message: "No verification token provided." });
+        }
+
         const user = await userModel.findOne({
             verifyToken: token,
             verifyTokenExpiry: { $gt: Date.now() }
@@ -348,8 +356,12 @@ const resendVerification = async (req, res) => {
         await user.save();
 
         // Send Verification Email
-        const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
-        const verifyLink = `${clientUrl}/verify-email/${verifyToken}`;
+        const clientUrl = process.env.CLIENT_URL;
+        if (!clientUrl) {
+            console.warn("[WARN] CLIENT_URL environment variable is missing. Verification links will default to http://localhost:5173");
+        }
+        const baseUrl = clientUrl || "http://localhost:5173";
+        const verifyLink = `${baseUrl}/verify-email/${verifyToken}`;
         
         console.log(`[VERIFY_EMAIL] Resending link for ${normalizedEmail}: ${verifyLink}`);
 

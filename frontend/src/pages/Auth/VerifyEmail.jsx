@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback } from 'react';
+import { useState, useContext, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { StoreContext } from '../../Context/StoreContext';
@@ -10,8 +10,12 @@ const VerifyEmail = () => {
     const { url } = useContext(StoreContext);
     const [status, setStatus] = useState('verifying');
     const navigate = useNavigate();
+    const hasFetched = useRef(false);
 
     const verifyEmail = useCallback(async () => {
+        if (hasFetched.current) return;
+        hasFetched.current = true;
+        
         try {
             const response = await axios.post(`${url}/api/user/verify-email`, { token });
             if (response.data.success) {
