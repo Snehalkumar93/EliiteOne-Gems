@@ -28,7 +28,25 @@ const limiter = rateLimit({
 
 // middlewares
 app.use(express.json())
-app.use(cors({ origin: process.env.CLIENT_URL }))
+
+// CORS — allow CLIENT_URL and optional ADMIN_URL (comma-separated or single)
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  process.env.ADMIN_URL,
+].filter(Boolean); // remove undefined/empty values
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (curl, Postman, server-to-server)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS not allowed for origin: ${origin}`));
+  },
+  credentials: true,
+}));
+
 app.use(limiter)
 
 // db connection
