@@ -38,7 +38,8 @@ const loginUser = async (req, res) => {
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                profileImage: user.profileImage
+                profileImage: user.profileImage,
+                createdAt: user.createdAt
             }
         })
     } catch (error) {

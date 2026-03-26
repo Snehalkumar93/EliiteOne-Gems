@@ -257,7 +257,7 @@ const Profile = () => {
                             )}
                         </form>
                         <div className="account-meta">
-                            <p>Member Since: <span>{new Date(userData.createdAt).toLocaleDateString()}</span></p>
+                            <p>Member Since: <span>{userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : 'Not available'}</span></p>
                         </div>
                     </div>
                 )}
