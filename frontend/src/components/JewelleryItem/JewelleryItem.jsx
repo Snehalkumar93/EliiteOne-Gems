@@ -12,7 +12,7 @@ const JewelleryItem = ({ item }) => {
     return (
         <div className='jewellery-item'>
             <div className='jewellery-item-img-container'>
-                <Link to={`/product/${_id}`}><img className='jewellery-item-image' src={url+"/images/"+image} alt="" /></Link>
+                <Link to={`/product/${_id}`}><img className='jewellery-item-image' src={image?.startsWith('http') || image?.startsWith('data:') ? image : url+"/images/"+image} alt="" /></Link>
                 {role !== 'admin' && (
                     !cartItems[_id]
                     ?<img className='add' onClick={() => addToCart(_id)} src={assets.add_icon_white} alt="" />

@@ -179,7 +179,8 @@ const uploadProfileImage = async (req, res) => {
         if (!req.file) {
             return res.json({ success: false, message: "No image provided" });
         }
-        const profileImage = req.file.filename;
+        
+        const profileImage = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
         const userId = req.user.id || req.body.userId;
         const user = await userModel.findByIdAndUpdate(userId, { profileImage }, { new: true }).select("-password");
         if (!user) {

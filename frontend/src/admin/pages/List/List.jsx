@@ -82,7 +82,7 @@ const List = () => {
                         list.map((item, index) => (
                             <div key={index} className='inventory-row'>
                                 <div className='item-img-cell'>
-                                    <img src={`${url}/images/${item.image}`} alt={item.name} />
+                                    <img src={item.image?.startsWith('http') || item.image?.startsWith('data:') ? item.image : `${url}/images/${item.image}`} alt={item.name} />
                                 </div>
                                 <div className='item-name-cell'>
                                     <p className='primary-text'>{item.name}</p>

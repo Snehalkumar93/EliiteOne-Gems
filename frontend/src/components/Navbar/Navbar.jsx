@@ -180,7 +180,7 @@ const Navbar = ({ setShowLogin }) => {
                 <ul className="search-results">
                   {searchResults.map((item) => (
                     <li key={item._id} onClick={() => handleResultClick(item._id)}>
-                      <img src={url + "/images/" + item.image} alt="" />
+                      <img src={item.image?.startsWith('http') || item.image?.startsWith('data:') ? item.image : url + "/images/" + item.image} alt="" />
                       <div>
                         <p className="res-name">{item.name}</p>
                         <p className="res-cat">{item.category}</p>
@@ -215,7 +215,7 @@ const Navbar = ({ setShowLogin }) => {
             <div className="icon-wrapper profile-icon-navbar">
                {userData?.profileImage ? (
                 <img 
-                  src={url + "/images/profile/" + userData.profileImage} 
+                  src={userData.profileImage.startsWith('http') || userData.profileImage.startsWith('data:') ? userData.profileImage : url + "/images/profile/" + userData.profileImage} 
                   alt="Profile" 
                   className="navbar-profile-img"
                   style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }}

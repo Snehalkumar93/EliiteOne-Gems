@@ -7,12 +7,7 @@ import multer from 'multer';
 const userRouter = express.Router();
 
 // Profile Image Storage Engine
-const storage = multer.diskStorage({
-    destination: "uploads/profile",
-    filename: (req, file, cb) => {
-        return cb(null, `${Date.now()}${file.originalname}`);
-    }
-})
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage: storage })
 

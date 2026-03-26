@@ -71,6 +71,8 @@ const Product = () => {
 
     const gallery = [product.image, ...(product.images || [])];
 
+    const getImgSrc = (img) => (img?.startsWith('http') || img?.startsWith('data:')) ? img : url + "/images/" + img;
+
     const nextImage = () => {
         setActiveImage((prev) => (prev + 1) % gallery.length);
     }
@@ -87,10 +89,10 @@ const Product = () => {
                          onMouseMove={handleMouseMove}
                          onMouseLeave={() => setZoomPos({...zoomPos, show: false})}>
                         {gallery.length > 1 && <button className='slider-btn prev' onClick={prevImage}>&#10094;</button>}
-                        <img className='product-main-image' src={url + "/images/" + gallery[activeImage]} alt={product.name} key={activeImage} />
+                        <img className='product-main-image' src={getImgSrc(gallery[activeImage])} alt={product.name} key={activeImage} />
                         {zoomPos.show && (
                             <div className='zoom-overlay' style={{
-                                backgroundImage: `url(${url + "/images/" + gallery[activeImage]})`,
+                                backgroundImage: `url(${getImgSrc(gallery[activeImage])})`,
                                 backgroundPosition: `${zoomPos.x}% ${zoomPos.y}%`
                             }}></div>
                         )}
@@ -104,7 +106,7 @@ const Product = () => {
                                     className={`thumbnail-item ${index === activeImage ? 'active' : ''}`}
                                     onClick={() => setActiveImage(index)}
                                 >
-                                    <img src={url + "/images/" + img} alt="" />
+                                    <img src={getImgSrc(img)} alt="" />
                                 </div>
                             ))}
                         </div>

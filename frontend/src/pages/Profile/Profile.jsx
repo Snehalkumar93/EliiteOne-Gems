@@ -185,7 +185,7 @@ const Profile = () => {
             <div className="profile-sidebar">
                 <div className="sidebar-header">
                     <div className='avatar-container' onClick={openProfilePreview}>
-                        <img src={imagePreview || (userData.profileImage ? url + "/images/profile/" + userData.profileImage : assets.profile_icon)} alt="Profile" />
+                        <img src={imagePreview || (userData.profileImage ? (userData.profileImage.startsWith('http') || userData.profileImage.startsWith('data:') ? userData.profileImage : url + "/images/profile/" + userData.profileImage) : assets.profile_icon)} alt="Profile" />
                         <div className="avatar-edit-icon" onClick={handleImageClick}>
                             <Camera size={16} />
                         </div>
@@ -460,7 +460,7 @@ const Profile = () => {
                         <button className="modal-close-btn" onClick={closeProfilePreview}>×</button>
                         <div className="modal-image-wrapper">
                             <img 
-                                src={imagePreview || (userData.profileImage ? url + "/images/profile/" + userData.profileImage : assets.profile_icon)} 
+                                src={imagePreview || (userData.profileImage ? (userData.profileImage.startsWith('http') || userData.profileImage.startsWith('data:') ? userData.profileImage : url + "/images/profile/" + userData.profileImage) : assets.profile_icon)} 
                                 alt="Profile Full Preview" 
                             />
                         </div>

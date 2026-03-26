@@ -30,7 +30,7 @@ const Recommendations = ({ title = "Recommended For You", userId = "null" }) => 
             <div className='recommendations-list'>
                 {recommendations.map((item) => (
                     <Link to={`/product/${item._id}`} key={item._id} className='rec-item' onClick={() => window.scrollTo(0,0)}>
-                        <img src={url + "/images/" + item.image} alt={item.name} />
+                        <img src={item.image?.startsWith('http') || item.image?.startsWith('data:') ? item.image : url + "/images/" + item.image} alt={item.name} />
                         <div className='rec-info'>
                             <p className='rec-name'>{item.name}</p>
                             <p className='rec-price'>{currency}{item.price}</p>

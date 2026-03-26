@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { StoreContext } from '../Context/StoreContext';
 import Navbar from './components/Navbar/Navbar';
@@ -7,6 +7,7 @@ import './Admin.css';
 
 const AdminLayout = () => {
     const { role, token } = useContext(StoreContext);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     if (!token || role !== 'admin') {
         return <Navigate to="/" replace />;
@@ -14,9 +15,12 @@ const AdminLayout = () => {
 
     return (
         <div className='admin-layout'>
-            <Navbar />
+            <Navbar setIsSidebarOpen={setIsSidebarOpen} />
             <div className="admin-content">
-                <Sidebar />
+                {isSidebarOpen && (
+                    <div className="admin-sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>
+                )}
+                <Sidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
                 <div className="admin-main-viewport">
                     <Outlet />
                 </div>

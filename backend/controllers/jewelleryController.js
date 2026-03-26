@@ -1,6 +1,10 @@
 import jewelleryModel from "../models/jewelleryModel.js";
 import userModel from "../models/userModel.js";
-import fs from 'fs'
+import fs from 'fs';
+
+const processImageToBuffer = (file) => {
+    return `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
+};
 
 // all jewellery list
 const listJewellery = async (req, res) => {
@@ -17,16 +21,23 @@ const listJewellery = async (req, res) => {
 // add jewellery
 const addJewellery = async (req, res) => {
     try {
-        let image_filename = req.files.image ? req.files.image[0].filename : "";
-        let gallery_images = req.files.images ? req.files.images.map(file => file.filename) : [];
+        let image_url = "";
+        if (req.files.image) {
+            image_url = processImageToBuffer(req.files.image[0]);
+        }
+
+        let gallery_urls = [];
+        if (req.files.images) {
+            gallery_urls = req.files.images.map(file => processImageToBuffer(file));
+        }
 
         const jewellery = new jewelleryModel({
             name: req.body.name,
             description: req.body.description,
             price: req.body.price,
             category: req.body.category,
-            image: image_filename,
-            images: gallery_images,
+            image: image_url,
+            images: gallery_urls,
             material: req.body.material,
             weight: req.body.weight,
             purity: req.body.purity,
@@ -51,7 +62,11 @@ const removeJewellery = async (req, res) => {
     try {
 
         const jewellery = await jewelleryModel.findById(req.body.id);
-        fs.unlink(`uploads/${jewellery.image}`, () => { })
+        
+        // Attempt to delete local file if it exists, ignore if Base64 or Cloudinary URL
+        if (jewellery.image && !jewellery.image.startsWith('http') && !jewellery.image.startsWith('data:')) {
+            fs.unlink(`uploads/${jewellery.image}`, () => { })
+        }
 
         await jewelleryModel.findByIdAndDelete(req.body.id)
         res.json({ success: true, message: "Jewellery Removed" })
