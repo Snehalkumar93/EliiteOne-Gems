@@ -13,6 +13,8 @@ const sendEmail = async (to, subject, htmlContent) => {
             pass: process.env.EMAIL_PASS
         }
     });
+    
+    console.log("[SMTP] EMAIL_USER:", process.env.EMAIL_USER);
 
     try {
         const info = await transporter.sendMail({

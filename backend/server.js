@@ -73,6 +73,30 @@ app.get("/", (req, res) => {
     res.send("API Working")
   });
 
+app.get("/api/test-email", async (req, res) => {
+    try {
+        const { default: sendEmail } = await import('./config/email.js');
+        const testUser = process.env.EMAIL_USER;
+        
+        console.log("Attempting to send test email to:", testUser);
+        
+        const success = await sendEmail(
+            testUser,
+            "Test SMTP Configuration",
+            "<h2>Success!</h2><p>Your SMTP configuration is working perfectly.</p>"
+        );
+        
+        if (success) {
+            res.json({ success: true, message: `Test email sent successfully to ${testUser}.` });
+        } else {
+            res.status(500).json({ success: false, message: "Failed to send test email. Check server logs." });
+        }
+    } catch (error) {
+        console.error("Test Email Route Error:", error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
 app.listen(port, () => console.log(`Server started on http://localhost:${port}`))
 
 // Background Sync for Shipping Status (Every 6 hours)
