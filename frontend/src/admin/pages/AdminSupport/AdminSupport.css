@@ -256,6 +256,18 @@
 }
 
 @media (max-width: 768px) {
+    .admin-support-page {
+        padding: 16px;
+    }
+    .title-group h1 {
+        font-size: 24px;
+    }
+    .title-group {
+        gap: 15px;
+    }
+    .support-header-luxury {
+        margin-bottom: 25px;
+    }
     .tickets-grid {
         grid-template-columns: 1fr;
     }

@@ -123,7 +123,7 @@
 .coupons-list-container {
     background: white;
     border-radius: 12px;
-    overflow: hidden;
+    overflow-x: auto;
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
@@ -136,6 +136,7 @@
     font-weight: 600;
     font-size: 0.85rem;
     color: #666;
+    min-width: 800px;
 }
 
 .table-row {
@@ -145,6 +146,7 @@
     border-bottom: 1px solid #f9f9f9;
     align-items: center;
     transition: background 0.2s;
+    min-width: 800px;
 }
 
 .table-row:hover {
@@ -193,4 +195,14 @@
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .coupons-page { padding: 16px; }
+    .header-info h1 { font-size: 24px; }
+    .coupons-header { flex-direction: column; align-items: flex-start; gap: 15px; margin-bottom: 25px; }
+    .add-coupon-btn { width: 100%; justify-content: center; padding: 12px; }
+    .coupon-form-container { padding: 20px; }
+    .form-grid { grid-template-columns: 1fr; gap: 15px; }
+    .input-wrapper input, .form-group select { min-height: 48px; }
 }

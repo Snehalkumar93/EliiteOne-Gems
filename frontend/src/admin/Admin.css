@@ -38,7 +38,26 @@
 
 @media (max-width: 768px) {
   .admin-main-viewport {
-    padding: 15px;
+    padding: 16px;
+  }
+}
+
+.admin-sidebar-overlay {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .admin-sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 1040;
+    transition: opacity 0.3s ease;
   }
 }
 

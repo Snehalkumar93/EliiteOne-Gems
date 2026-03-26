@@ -10,12 +10,28 @@
     top: 0;
     z-index: 1000;
     box-shadow: 0 4px 15px rgba(106, 13, 173, 0.05);
+    height: 80px;
 }
 
 .nav-left {
     display: flex;
     align-items: center;
     gap: 15px;
+}
+
+.admin-mobile-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-main);
+    padding: 6px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.admin-mobile-menu-btn:hover {
+    background: var(--bg-soft);
 }
 
 .nav-left .logo {
@@ -94,4 +110,35 @@
 
 .nav-profile .profile:hover {
     transform: scale(1.05);
+}
+
+@media (max-width: 1024px) {
+    .navbar-luxury {
+        padding: 12px 20px;
+    }
+    .admin-mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-luxury {
+        padding: 10px 16px;
+        height: 70px;
+    }
+    .brand-info span {
+        display: none;
+    }
+    .nav-right {
+        gap: 15px;
+    }
+    .tool-btn {
+        padding: 8px;
+    }
+    .nav-profile .profile {
+        width: 36px;
+        height: 36px;
+    }
 }

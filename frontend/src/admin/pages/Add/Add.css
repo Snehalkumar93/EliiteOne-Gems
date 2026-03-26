@@ -234,8 +234,24 @@
 }
 
 @media (max-width: 768px) {
+    .add-jewellery-page {
+        padding: 16px;
+    }
+    .add-jewellery-header h1 {
+        font-size: 24px;
+    }
+    .add-jewellery-header {
+        margin-bottom: 25px;
+    }
+    .form-section {
+        padding: 20px;
+    }
+    .input-group input, .input-group textarea, .input-group select {
+        min-height: 48px;
+    }
     .media-upload-container, .input-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
     .input-group.full-width {
         grid-column: span 1;
@@ -246,5 +262,7 @@
     .submit-piece-btn {
         width: 100%;
         justify-content: center;
+        padding: 14px 20px;
+        border-radius: 12px;
     }
 }
