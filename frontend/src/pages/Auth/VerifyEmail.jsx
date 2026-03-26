@@ -17,7 +17,7 @@ const VerifyEmail = () => {
         hasFetched.current = true;
         
         try {
-            const response = await axios.post(`${url}/api/user/verify-email`, { token });
+            const response = await axios.get(`${url}/api/user/verify-email/${token}`);
             if (response.data.success) {
                 setStatus('success');
                 toast.success(response.data.message);

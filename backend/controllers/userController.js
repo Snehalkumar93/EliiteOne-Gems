@@ -70,16 +70,16 @@ const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt)
 
         // Generate verification token
-        const verifyToken = crypto.randomBytes(32).toString("hex");
-        const verifyTokenExpiry = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+        const token = crypto.randomBytes(32).toString("hex");
+        const emailVerifyExpiry = Date.now() + 15 * 60 * 1000; // 15 mins
 
         const newUser = new userModel({
             name: name,
             email: normalizedEmail,
             password: hashedPassword,
-            isVerified: false, // Must be explicitly false for new users
-            verifyToken: verifyToken,
-            verifyTokenExpiry: verifyTokenExpiry
+            isVerified: false, 
+            emailVerifyToken: token,
+            emailVerifyExpiry: emailVerifyExpiry
         })
 
         const user = await newUser.save()
@@ -90,9 +90,10 @@ const registerUser = async (req, res) => {
             console.warn("[WARN] CLIENT_URL environment variable is missing. Verification links will default to http://localhost:5173");
         }
         const baseUrl = clientUrl || "http://localhost:5173";
-        const verifyLink = `${baseUrl}/verify-email/${verifyToken}`;
+        const verifyLink = `${baseUrl}/verify-email/${token}`;
         
         console.log(`[VERIFY_EMAIL] Generated link for ${normalizedEmail}: ${verifyLink}`);
+        console.log(`[VERIFY_EMAIL] Saved token in DB: ${token}`);
         
         const emailSubject = 'Verify Your Email - EliteOne Gems';
         const emailHtml = `
@@ -112,7 +113,7 @@ const registerUser = async (req, res) => {
         if (mailSent) {
             console.log(`[VERIFY_EMAIL] Email successfully sent to ${normalizedEmail}`);
         } else {
-            console.error(`[VERIFY_EMAIL] Failed to send email to ${normalizedEmail}`);
+            console.error(`[VERIFY_EMAIL_ERROR] Failed to send email to ${normalizedEmail}`);
         }
 
         res.json({ success: true, message: "Registration successful! Please check your email for verification link." })
@@ -303,30 +304,33 @@ const trackView = async (req, res) => {
 
 // Verify Email
 const verifyEmail = async (req, res) => {
-    const { token } = req.body;
+    const token = req.params.token;
+    console.log(`[VERIFY_EMAIL_ROUTE] Verifying token input: ${token?.substring(0, 8)}...`);
     try {
         if (!token) {
-            return res.json({ success: false, message: "No verification token provided." });
+            return res.status(400).json({ success: false, message: "No verification token provided." });
         }
 
         const user = await userModel.findOne({
-            verifyToken: token,
-            verifyTokenExpiry: { $gt: Date.now() }
+            emailVerifyToken: token,
+            emailVerifyExpiry: { $gt: Date.now() }
         });
 
         if (!user) {
-            console.warn(`[VERIFY_EMAIL] Invalid or expired token attempt: ${token?.substring(0, 8)}...`);
-            return res.json({ success: false, message: "Invalid or expired verification link." });
+            console.warn(`[VERIFY_EMAIL_ROUTE_FAILED] Invalid or expired token attempt: ${token?.substring(0, 8)}... - User not found.`);
+            return res.status(400).json({ success: false, message: "Invalid or expired verification link." });
         }
 
+        console.log(`[VERIFY_EMAIL_ROUTE_FOUND] User ${user.email} matched. Proceeding to verify.`);
+
         user.isVerified = true;
-        user.verifyToken = "";
-        user.verifyTokenExpiry = null;
+        user.emailVerifyToken = undefined;
+        user.emailVerifyExpiry = undefined;
         await user.save();
 
-        console.log(`[VERIFY_EMAIL] User ${user.email} verified successfully.`);
+        console.log(`[VERIFY_EMAIL_OK] User ${user.email} verified successfully.`);
 
-        res.json({ success: true, message: "Email verified successfully! You can now login." });
+        return res.status(200).json({ success: true, message: "Email verified successfully! You can now login." });
     } catch (error) {
         console.error("Verify Email Error:", error);
         res.json({ success: false, message: "Verification failed. Please try again." });
@@ -349,11 +353,11 @@ const resendVerification = async (req, res) => {
         }
 
         // Generate new verification token
-        const verifyToken = crypto.randomBytes(32).toString("hex");
-        const verifyTokenExpiry = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+        const token = crypto.randomBytes(32).toString("hex");
+        const emailVerifyExpiry = Date.now() + 15 * 60 * 1000; // 15 mins
 
-        user.verifyToken = verifyToken;
-        user.verifyTokenExpiry = verifyTokenExpiry;
+        user.emailVerifyToken = token;
+        user.emailVerifyExpiry = emailVerifyExpiry;
         await user.save();
 
         // Send Verification Email
@@ -362,7 +366,7 @@ const resendVerification = async (req, res) => {
             console.warn("[WARN] CLIENT_URL environment variable is missing. Verification links will default to http://localhost:5173");
         }
         const baseUrl = clientUrl || "http://localhost:5173";
-        const verifyLink = `${baseUrl}/verify-email/${verifyToken}`;
+        const verifyLink = `${baseUrl}/verify-email/${token}`;
         
         console.log(`[VERIFY_EMAIL] Resending link for ${normalizedEmail}: ${verifyLink}`);
 
