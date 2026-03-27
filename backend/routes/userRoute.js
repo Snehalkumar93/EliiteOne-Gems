@@ -21,7 +21,7 @@ userRouter.post("/track-view", authMiddleware, trackView);
 // Auth Security Routes
 userRouter.post("/forgot-password", forgotPassword);
 userRouter.post("/reset-password", resetPassword);
-userRouter.get("/verify-email/:token", verifyEmail);
-userRouter.post("/resend-verification", resendVerification);
+// userRouter.get("/verify-email/:token", verifyEmail);
+// userRouter.post("/resend-verification", resendVerification);
 
 export default userRouter;

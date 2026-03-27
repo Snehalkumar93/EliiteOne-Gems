@@ -24,9 +24,11 @@ const loginUser = async (req, res) => {
             return res.json({ success: false, message: "Invalid credentials" })
         }
 
+/*
         if (user.isVerified === false) {
             return res.json({ success: false, message: "Please verify your email before logging in." });
         }
+*/
 
 
         const token = generateToken(user._id, user.role);
@@ -78,13 +80,14 @@ const registerUser = async (req, res) => {
             name: name,
             email: normalizedEmail,
             password: hashedPassword,
-            isVerified: false, 
-            emailVerifyToken: token,
-            emailVerifyExpiry: emailVerifyExpiry
+            isVerified: true, 
+            // emailVerifyToken: token,
+            // emailVerifyExpiry: emailVerifyExpiry
         })
 
         const user = await newUser.save()
         
+/*
         // Send Verification Email
         const clientUrl = process.env.CLIENT_URL;
         if (!clientUrl) {
@@ -116,8 +119,9 @@ const registerUser = async (req, res) => {
         } else {
             console.error(`[VERIFY_EMAIL_ERROR] Failed to send email to ${normalizedEmail}`);
         }
+*/
 
-        res.json({ success: true, message: "Registration successful! Please check your email for verification link." })
+        res.json({ success: true, message: "Registration successful! You can now login." })
     } catch (error) {
         console.log(error)
         res.json({ success: false, message: "Error" })
@@ -303,6 +307,7 @@ const trackView = async (req, res) => {
 }
 
 
+/*
 // Verify Email
 const verifyEmail = async (req, res) => {
     const token = req.params.token;
@@ -397,5 +402,6 @@ const resendVerification = async (req, res) => {
         res.json({ success: false, message: "Failed to resend verification email." });
     }
 }
+*/
 
 export { loginUser, registerUser, getUserProfile, updateUserProfile, uploadProfileImage, forgotPassword, resetPassword, trackView, verifyEmail, resendVerification }
