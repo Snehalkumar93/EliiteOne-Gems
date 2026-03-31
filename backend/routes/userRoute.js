@@ -1,5 +1,5 @@
 import express from 'express';
-import { loginUser, registerUser, getUserProfile, updateUserProfile, uploadProfileImage, forgotPassword, resetPassword, trackView, verifyEmail, resendVerification } from '../controllers/userController.js';
+import { loginUser, registerUser, getUserProfile, updateUserProfile, uploadProfileImage, forgotPassword, resetPassword, trackView } from '../controllers/userController.js';
 import authMiddleware from "../middleware/authMiddleware.js";
 import adminMiddleware from "../middleware/adminMiddleware.js";
 import multer from 'multer';

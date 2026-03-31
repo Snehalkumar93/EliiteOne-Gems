@@ -17,7 +17,6 @@ const LoginPopup = ({ setShowLogin }) => {
         email: "",
         password: ""
     })
-    // const [unverifiedEmail, setUnverifiedEmail] = useState("");
 
     const onChangeHandler = (event) => {
         const name = event.target.name
@@ -31,8 +30,7 @@ const LoginPopup = ({ setShowLogin }) => {
         let new_url = url;
         if (currState === "Login") {
             new_url += "/api/user/login";
-        }
-        else {
+        } else {
             new_url += "/api/user/register"
         }
         const response = await axios.post(new_url, data);
@@ -52,32 +50,10 @@ const LoginPopup = ({ setShowLogin }) => {
                 toast.success("Login Successful");
                 setShowLogin(false)
             }
-        }
-        else {
+        } else {
             toast.error(response.data.message)
-            /*
-            if (response.data.message === "Please verify your email before logging in.") {
-                setUnverifiedEmail(data.email)
-            }
-            */
         }
     }
-
-/*
-    const resendVerification = async () => {
-        try {
-            const response = await axios.post(url + "/api/user/resend-verification", { email: unverifiedEmail });
-            if (response.data.success) {
-                toast.success(response.data.message);
-                setUnverifiedEmail("");
-            } else {
-                toast.error(response.data.message);
-            }
-        } catch (error) {
-            toast.error("Error resending verification email.");
-        }
-    }
-*/
 
     return (
         <div className='login-popup'>
@@ -96,20 +72,13 @@ const LoginPopup = ({ setShowLogin }) => {
                         Forgot Password? <span onClick={() => { setShowLogin(false); navigate('/forgot-password'); }}>Click here</span>
                     </p>
                 )}
-/*
-                {unverifiedEmail && (
-                    <p className='resend-verification-text' style={{ fontSize: '12px', marginTop: '10px', color: '#6b7280' }}>
-                        Didn't receive email? <span onClick={resendVerification} style={{ color: '#9333ea', cursor: 'pointer', fontWeight: 'bold' }}>Resend Verification</span>
-                    </p>
-                )}
-*/
                 <div className="login-popup-condition">
                     <input type="checkbox" name="" id="" required/>
                     <p>By continuing, i agree to the terms of use & privacy policy.</p>
                 </div>
                 {currState === "Login"
-                    ? <p>Create a new account? <span onClick={() => {setCurrState('Sign Up'); setUnverifiedEmail("")}}>Click here</span></p>
-                    : <p>Already have an account? <span onClick={() => {setCurrState('Login'); setUnverifiedEmail("")}}>Login here</span></p>
+                    ? <p>Create a new account? <span onClick={() => setCurrState('Sign Up')}>Click here</span></p>
+                    : <p>Already have an account? <span onClick={() => setCurrState('Login')}>Login here</span></p>
                 }
             </form>
         </div>

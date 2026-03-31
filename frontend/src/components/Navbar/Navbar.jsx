@@ -15,7 +15,7 @@ const Navbar = ({ setShowLogin }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const { getTotalCartAmount, token, setToken, role, setRole, url, userData } = useContext(StoreContext);
+  const { getTotalCartAmount, token, setToken, role, setRole, url, userData, setUserData } = useContext(StoreContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -219,6 +219,7 @@ const Navbar = ({ setShowLogin }) => {
                   alt="Profile" 
                   className="navbar-profile-img"
                   style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }}
+                  onError={(e) => { e.target.style.display = 'none'; }}
                 />
               ) : (
                 <User className="nav-icon" size={22} strokeWidth={2.5} />

@@ -404,4 +404,4 @@ const resendVerification = async (req, res) => {
 }
 */
 
-export { loginUser, registerUser, getUserProfile, updateUserProfile, uploadProfileImage, forgotPassword, resetPassword, trackView, verifyEmail, resendVerification }
+export { loginUser, registerUser, getUserProfile, updateUserProfile, uploadProfileImage, forgotPassword, resetPassword, trackView }
